@@ -1,15 +1,14 @@
 "use client";
 
-import { Transaction, TransactionType } from "@prisma/client";
+import { Transaction } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import TransactionTypeBadge from "../_components/type-badge";
-// import { Button } from "@/app/_components/ui/button";
-// import {
-//   TRANSACTION_CATEGORY_LABELS,
-//   TRANSACTION_PAYMENT_METHOD_LABELS,
-// } from "@/app/_constants/transactions";
-// import EditTransactionButton from "../_components/edit-transaction-button";
-import { Badge } from "@/app/_components/ui/badge";
+import { Button } from "@/app/_components/ui/button";
+import { PencilIcon, TrashIcon } from "lucide-react";
+import {
+  TRANSACTION_CATEGORY_LABELS,
+  TRANSACTION_PAYMENT_METHOD_LABELS,
+} from "@/app/_constants/transactions";
 
 // Arquivo que define as colunas da minha tabela
 export const transactionColumns: ColumnDef<Transaction>[] = [
@@ -24,18 +23,18 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
       <TransactionTypeBadge transaction={transaction} />;
     },
   },
-  // {
-  //   accessorKey: "category",
-  //   header: "Categoria",
-  //   cell: ({ row: { original: transaction } }) =>
-  //     TRANSACTION_CATEGORY_LABELS[transaction.category],
-  // },
-  // {
-  //   accessorKey: "paymentMethod",
-  //   header: "Método de Pagamento",
-  //   cell: ({ row: { original: transaction } }) =>
-  //     TRANSACTION_PAYMENT_METHOD_LABELS[transaction.paymentMethod],
-  // },
+  {
+    accessorKey: "category",
+    header: "Categoria",
+    cell: ({ row: { original: transaction } }) =>
+      TRANSACTION_CATEGORY_LABELS[transaction.category],
+  },
+  {
+    accessorKey: "paymentMethod",
+    header: "Método de Pagamento",
+    cell: ({ row: { original: transaction } }) =>
+      TRANSACTION_PAYMENT_METHOD_LABELS[transaction.paymentMethod],
+  },
   {
     accessorKey: "date",
     header: "Data",
@@ -50,23 +49,25 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
     accessorKey: "amount",
     header: "Valor",
     cell: ({ row: { original: transaction } }) =>
-      new Intl.NumberFormat("pt-BR", {
+      new Intl.NumberFormat("pt-BR", { // Esse Intl é uma classe global do JavaScript que me permite formatar números, datas e moedas.
         style: "currency",
         currency: "BRL",
-      }).format(Number(transaction.amount)),
+      }).format(Number(transaction.amount)), // Preciso colocar o Number aqui porque o amount é uma string e o Intl.NumberFormat espera um número. Esse é o jeito para formatar o número como moeda.
   },
   {
     accessorKey: "actions",
     header: "Ações",
-    // cell: ({ row: { original: transaction } }) => {
-    //   return (
-    //     <div className="space-x-1">
-    //       {/* <EditTransactionButton transaction={transaction} /> */}
-    //       <Button variant="ghost" size="icon" className="text-muted-foreground">
-    //         <TrashIcon />
-    //       </Button>
-    //     </div>
-    //   );
-    // },
+    cell: ({ row: { original: transaction } }) => {
+      return (
+        <div className="space-x-1">
+          <Button variant="ghost" size="icon" className="text-muted-foreground">
+            <PencilIcon />
+          </Button>
+          <Button variant="ghost" size="icon" className="text-muted-foreground">
+            <TrashIcon />
+          </Button>
+        </div>
+      );
+    },
   },
 ];
