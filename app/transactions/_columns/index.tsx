@@ -15,7 +15,7 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "name",
     header: "Nome",
-  },
+  },           
   {
     accessorKey: "type",
     header: "Tipo",
@@ -57,7 +57,7 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "actions",
     header: "Ações",
-    cell: ({ row: { original: transaction } }) => {
+    cell: () => {
       return (
         <div className="space-x-1">
           <Button variant="ghost" size="icon" className="text-muted-foreground">
