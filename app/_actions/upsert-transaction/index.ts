@@ -34,12 +34,12 @@ export const upsertTransaction = async (params: UpsertTransactionParams) => {
   if (!userId) {
     throw new Error("User not authenticated");
   }
-  const transaction = await db.transaction.upsert({
-    where: {
-      id: params.id,
-    },
+  const transaction = await db.transaction.upsert({    
     update: { ...params, userId },
     create: { ...params, userId },
+    where: {
+      id: params?.id ?? "", // Se o id existir, eu atualizo, se não, eu crio
+    },
   });
   revalidatePath("/transactions");
 
