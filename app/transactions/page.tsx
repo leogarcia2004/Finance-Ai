@@ -3,12 +3,21 @@ import { DataTable } from "../_components/ui/data-table";
 import { transactionColumns } from "./_columns/index";
 import AddTransactionButton from "../_components/add-transaction-button";
 import NavBar from "@/app/_components/navbar";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 const TransactionsPage = async () => {
+  const {userId} = await auth(); // Pegar o id do usuário logado
+  if (!userId) { // Se não tiver usuário logado, redirecionar para a página de login
+    redirect("/login");
+  }
   // Pegar as transações do usuário logado.
   // Acessar as transações do meu banco de dados. Para isso vou precisar usar o prisma também.
   const transactions = await db.transaction.findMany({
     // Com isso, eu pego todas as transações que estão na tabela
+    where: {
+      userId, // Filtrar as transações pelo id do usuário logado, ou seja, irá mostrar apenas as transações do usuário logado.
+    },
   });
   return (
 
