@@ -4,7 +4,7 @@ import { Transaction } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import TransactionTypeBadge from "../_components/type-badge";
 import { Button } from "@/app/_components/ui/button";
-import { PencilIcon, TrashIcon } from "lucide-react";
+import { TrashIcon } from "lucide-react";
 import {
   TRANSACTION_CATEGORY_LABELS,
   TRANSACTION_PAYMENT_METHOD_LABELS,
@@ -20,9 +20,9 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "type",
     header: "Tipo",
-    cell: ({ row: { original: transaction } }) => { // a 'row' é a transação. O que retornar nesse cell, é o que vai ser renderizado na minha célula.
-      <TransactionTypeBadge transaction={transaction} />;
-    },
+    cell: ({ row: { original: transaction } }) => ( // a 'row' é a transação. O que retornar nesse cell, é o que vai ser renderizado na minha célula.
+      <TransactionTypeBadge transaction={transaction} />
+    ),
   },
   {
     accessorKey: "category",

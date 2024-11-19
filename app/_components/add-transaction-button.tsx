@@ -20,9 +20,8 @@ const AddTransactionButton = () => {
         <ArrowDownUpIcon />
       </Button>
       <UpsertTransactionDialog
-        form={form}
         isOpen={dialogIsOpen}
-        onClose={() => setDialogIsOpen(false)}
+        setIsOpen={setDialogIsOpen}
       />
     </>
   );
