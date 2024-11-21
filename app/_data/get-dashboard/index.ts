@@ -4,7 +4,7 @@ import { db } from "@/app/_lib/prisma"
 import { TransactionType } from "@prisma/client"
 import { TransactionPercentagePerType, TotalExpensePerCategory } from "./type"
 
-export const getDashboard = async (month: string) => {
+export const getDashboard = async (month: string) => { // Essa função é executada no servidor, e ela faz toda a lógica de pegar os dados que eu preciso para usar na interface
     const where = {
         date: {
         gte: new Date(`2024-${month}-01`),
@@ -70,7 +70,7 @@ export const getDashboard = async (month: string) => {
           (Number(category._sum.amount) / Number(expensesTotal)) * 100, // Aqui estou pegando a porcentagem de cada categoria em relação ao total de despesas, fazendo o calculo de cada categoria.
         ),
       }));
-      const lastTransactions = await db.transaction.findMany({
+      const lastTransactions = await db.transaction.findMany({ // Nesse caso eu quero pegar as últimas 15 transações, e ordenar por data decrescente.
         where,
         orderBy: { date: "desc" },
         take: 15,
