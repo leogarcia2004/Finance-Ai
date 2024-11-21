@@ -85,7 +85,7 @@ const UpsertTransactionDialog = ({
 }: UpsertTransactionDialogProps) => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
+    defaultValues: defaultValues ?? {
       name: "",
       amount: 50,
       type: TransactionType.EXPENSE, // O valor default(padrão) do meu tipo é despesa.
@@ -98,7 +98,7 @@ const UpsertTransactionDialog = ({
   // Função que vai ser chamada quando o formulário for enviado.
   const onSubmit = async (data: FormSchema) => {
     try {
-      await upsertTransaction({ ...data, id: transactionId });
+      await upsertTransaction({ ...data, id: transactionId, date: data.date.toISOString() });
       setIsOpen(false);
       form.reset();
     } catch (error) {

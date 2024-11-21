@@ -31,7 +31,7 @@ const LastTransactions = ({ lastTransactions }: LastTransactionsProps) => {
       };
 
   return (
-    <ScrollArea className="rounded-md border">
+    <ScrollArea className="rounded-md border h-[780px]">
         <CardHeader className="flex-row items-center justify-between">
         <CardTitle className="font-bold">Últimas Transações</CardTitle>
         {/*Sempre aplicar o 'asChild' nesse tipo de situação*/}

@@ -31,16 +31,16 @@ const Home = async ({searchParams: {month}}: HomeProps) => {
   return (
     <>
       <NavBar />
-      <div className="p-6 space-y-6 ">
+      <div className="flex flex-col p-6 space-y-6 overflow-hidden">
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold">Dashboard</h1>
           <TimeSelect />
         </div>
 
-        <div className="grid grid-cols-[2fr,1fr] gap-6">
-          <div className="flex flex-col gap-6">
+        <div className="grid grid-cols-[2fr,1fr] gap-6 overflow-hidden">
+          <div className="flex flex-col gap-6 overflow-hidden">
             <Summarycards month={month} {...dashboard}/> {/* Passando o mês e todos os dados da dashboard para o componente Summarycards */}
-            <div className="grid h-full grid-cols-3 grid-rows-1 gap-6 overflow-hidden">
+            <div className="grid h-[450px] grid-cols-3 grid-rows-1 gap-6 overflow-hidden">
                 <TransactionsPieChart {...dashboard} />
                 <ExpensesPerCategory
                   expensesPerCategory={dashboard.totalExpensePerCategory}
