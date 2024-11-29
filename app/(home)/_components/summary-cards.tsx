@@ -8,16 +8,17 @@ interface SummaryCards {
     depositsTotal: number;
     investmentsTotal: number;
     expensesTotal: number;
+    userCanAddTransaction?: boolean;
   }
   
 
-const Summarycards = async ({month, balance, depositsTotal, investmentsTotal, expensesTotal}: SummaryCards) => {
+const Summarycards = async ({month, balance, depositsTotal, investmentsTotal, expensesTotal, userCanAddTransaction}: SummaryCards) => {
 
     
   return (
     <div className="space-y-6">
         
-        <Summarycard icon={<WalletIcon size={14} />} title='Saldo' amount={balance} size='large' /> 
+        <Summarycard icon={<WalletIcon size={14} />} title='Saldo' amount={balance} size='large' userCanAddTransaction={userCanAddTransaction} /> 
         <div className='grid grid-cols-3 gap-6'>
             <Summarycard icon={<PiggyBankIcon size={16} />} title='Investido' amount={investmentsTotal} /> {/*  passo o icon dessa forma, pois ele é um ReactNode. */}
             <Summarycard icon={<TrendingUpIcon className='text-primary' size={16} />} title='Receita' amount={depositsTotal} />
