@@ -7,7 +7,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 
-const navbar = () => {
+const Navbar = () => {
     const pathName = usePathname(); // Controle de estado para mostrar que o link está ativo, colocar uma cor verde nele. Esse hook vai pegar a url atual.
   return (
     <nav className="flex justify-between px-8 py-4 border-b border-solid">
@@ -34,4 +34,4 @@ const navbar = () => {
   )
 }
 
-export default navbar
+export default Navbar

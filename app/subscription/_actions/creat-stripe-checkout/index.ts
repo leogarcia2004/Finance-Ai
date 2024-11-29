@@ -1,7 +1,7 @@
 "use server";
 // Arquivo de criação do checkout, e isso precisa ser criado no servidor, pois preciso usar dados sensíveis.
 import { auth } from "@clerk/nextjs/server";
-import  Stripe  from "stripe";
+import  Stripe from "stripe";
 
 export const createStripeCheckout = async () => {
   // Verifiar se o usuário está logado
@@ -18,13 +18,13 @@ export const createStripeCheckout = async () => {
 
   // Criação da sessão de checkout
   const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
+    payment_method_types: ['card'],
     mode: "subscription", // O mode tem que ser subscription para criar uma sessão de checkout de assinatura.
-    success_url: `http://localhost:3000`, // url que for mandar o usuário quando ocheckout for finalizado com sucesso.
-    cancel_url: `http://localhost:3000`,  // url que for mandar o usuário quando o checkout for cancelado.
+    success_url: 'http://localhost:3000', // url que for mandar o usuário quando o checkout for finalizado com sucesso.
+    cancel_url: 'http://localhost:3000',  // url que for mandar o usuário quando o checkout for cancelado.
     subscription_data: {
       metadata: {
-        clerkUserId: userId,
+        clerk_user_id: userId,
       },
     },
     line_items: [

@@ -2,11 +2,13 @@
 
 import { Button } from "@/app/_components/ui/button";
 import { createStripeCheckout } from "@/app/subscription/_actions/creat-stripe-checkout";
+import { useUser } from "@clerk/nextjs";
 import { loadStripe } from "@stripe/stripe-js";
+import Link from "next/link";
 
 // Qualquer variável que tem next_public de inicio no novo, é acessível por client components.
 const AcquirePlanButton = () => {
-
+  const { user } = useUser();
   // Chamar a server action que eu criei em _actions/create-stripe-checkout.tsx, para criar uma sessão de checkout.
   const handleAcquirePlanClick = async () => {
     // Criando o chekcout
@@ -24,6 +26,19 @@ const AcquirePlanButton = () => {
     // Redirecionando o usuário pro checkout
     await stripe.redirectToCheckout({ sessionId });
   };
+  const hasPremiumPlan = user?.publicMetadata.subscriptionPlan == "premium";
+  if (hasPremiumPlan) {
+    return (
+      <Button className="w-full rounded-full font-bold" variant="link">
+        <Link
+          href={`${process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL as string}?prefilled_email=${user.emailAddresses[0].emailAddress}`}
+        >
+          Gerenciar plano
+        </Link>
+      </Button>
+    );
+    
+  }
   return (
     <Button
       className="w-full rounded-full font-bold"
