@@ -1,4 +1,3 @@
-
 import { PiggyBankIcon, TrendingDownIcon, TrendingUpIcon, WalletIcon } from 'lucide-react'
 import Summarycard from './summary-card'
 
@@ -12,7 +11,7 @@ interface SummaryCards {
   }
   
 
-const Summarycards = async ({month, balance, depositsTotal, investmentsTotal, expensesTotal, userCanAddTransaction}: SummaryCards) => {
+const Summarycards = async ({balance, depositsTotal, investmentsTotal, expensesTotal, userCanAddTransaction}: SummaryCards) => {
 
     
   return (
@@ -20,7 +19,7 @@ const Summarycards = async ({month, balance, depositsTotal, investmentsTotal, ex
         
         <Summarycard icon={<WalletIcon size={14} />} title='Saldo' amount={balance} size='large' userCanAddTransaction={userCanAddTransaction} /> 
         <div className='grid grid-cols-3 gap-6'>
-            <Summarycard icon={<PiggyBankIcon size={16} />} title='Investido' amount={investmentsTotal} /> {/*  passo o icon dessa forma, pois ele é um ReactNode. */}
+            <Summarycard icon={<PiggyBankIcon size={16} />} title='Investido' amount={investmentsTotal} /> 
             <Summarycard icon={<TrendingUpIcon className='text-primary' size={16} />} title='Receita' amount={depositsTotal} />
             <Summarycard icon={<TrendingDownIcon size={16} className='text-red-500' />} title='Despesas' amount={expensesTotal} />        
                        

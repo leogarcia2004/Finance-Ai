@@ -1,11 +1,9 @@
-// Tudo o que eu preciso para montar minha dashboard, vai ser obtido nessa função abaixo. Esse arquivo vai pegar os dados da dashboard.
-
 import { db } from "@/app/_lib/prisma"
 import { TransactionType } from "@prisma/client"
 import { TransactionPercentagePerType, TotalExpensePerCategory } from "./type"
 import { auth } from "@clerk/nextjs/server";
 
-export const getDashboard = async (month: string) => { // Essa função é executada no servidor, e ela faz toda a lógica de pegar os dados que eu preciso para usar na interface
+export const getDashboard = async (month: string) => { 
     const { userId } = await auth();
     if (!userId) {
       throw new Error("Unauthorized");
@@ -17,11 +15,10 @@ export const getDashboard = async (month: string) => { // Essa função é execu
         lt: new Date(`2024-${month}-31`),
         }
     }
-    // Chamando o meu banco de dados
     const depositsTotal = Number(
         (await db.transaction.aggregate({
         _sum: { amount: true },
-        where: {...where, type: "DEPOSIT" }, // Quero que o aggregate pegue as transações que tem o tipo 'DEPOSIT' e some o valor do campo 'amount', ou seja, some todos os amounts desses depósitos.
+        where: {...where, type: "DEPOSIT" }, 
     }))?._sum?.amount 
     )
     const investmentsTotal = Number(
@@ -58,7 +55,7 @@ export const getDashboard = async (month: string) => { // Essa função é execu
           (Number(investmentsTotal || 0) / Number(transactionsTotal)) * 100,
         ),
       };
-      const totalExpensePerCategory: TotalExpensePerCategory[] = ( // Aqui estou agrupando todas as minhas transações(despesas) por categoria, e somando tudo.
+      const totalExpensePerCategory: TotalExpensePerCategory[] = ( 
         await db.transaction.groupBy({
           by: ["category"],
           where: {
@@ -73,10 +70,10 @@ export const getDashboard = async (month: string) => { // Essa função é execu
         category: category.category,
         totalAmount: Number(category._sum.amount),
         percentageOfTotal: Math.round(
-          (Number(category._sum.amount) / Number(expensesTotal)) * 100, // Aqui estou pegando a porcentagem de cada categoria em relação ao total de despesas, fazendo o calculo de cada categoria.
+          (Number(category._sum.amount) / Number(expensesTotal)) * 100, 
         ),
       }));
-      const lastTransactions = await db.transaction.findMany({ // Nesse caso eu quero pegar as últimas 15 transações, e ordenar por data decrescente.
+      const lastTransactions = await db.transaction.findMany({ 
         where,
         orderBy: { date: "desc" },
         take: 15,
@@ -89,7 +86,5 @@ export const getDashboard = async (month: string) => { // Essa função é execu
         typesPercentage,
         totalExpensePerCategory,
         lastTransactions,
-      };
-
-    
+      };   
 }

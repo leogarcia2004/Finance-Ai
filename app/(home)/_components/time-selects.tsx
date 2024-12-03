@@ -20,13 +20,12 @@ const MONTH_OPTIONS = [
 
 
 const TimeSelect = () => {
-    // Preciso pegar o mês para usá-lo para eu chamar o meu banco de dados.
-  // Colocando o mês na minha url para que eu consig usar esse mês na hora de eu chamar o meu banco.
-  const { push } = useRouter(); // Esse push é para eu poder mudar a url, que vai me direcionar para outra página.
+
+  const { push } = useRouter(); 
   const searchParams = useSearchParams();
   const month = searchParams.get("month");
   const handleMonthChange = (month: string) => {
-    push(`/?month=${month}`); // Aqui eu estou mudando a url para que eu possa pegar o mês que eu selecionei.
+    push(`/?month=${month}`); 
   };
   return (
     <Select

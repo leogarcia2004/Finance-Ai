@@ -1,5 +1,3 @@
-
-
 import { clerkClient } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
@@ -8,7 +6,7 @@ export const POST =  async (request: Request) => {
     if(!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_WEBHOOK_SECRET) {
         return NextResponse.error();
     }
-    const signature = request.headers.get("stripe-signature"); // Garantir que a requisição veio do stripe, para não ser um ataque.
+    const signature = request.headers.get("stripe-signature"); 
     if (!signature) {
         return NextResponse.error();
     }
@@ -25,7 +23,6 @@ export const POST =  async (request: Request) => {
         );
 
     switch (event.type) {
-        // A partir daqui o usuário já pagou a assinatura
         case "invoice.paid": {
 
           const {customer, subscription, subscription_details } = event.data.object
@@ -45,17 +42,14 @@ export const POST =  async (request: Request) => {
           });        
           break;
         }
-        // Para quando eu quiser cancelar a assinatura
         case "customer.subscription.deleted": {
-          // Remover plano premium do usuário
           const subscription = await stripe.subscriptions.retrieve(
-            event.data.object.id, // Pegando os dados da subscription
+            event.data.object.id, 
           );
           const clerkUserId = subscription.metadata.clerk_user_id;
           if (!clerkUserId) {
             return NextResponse.error();
           }
-          // Atualizar os dados do usuário no clerk
           await clerkClient().users.updateUser(clerkUserId, {
             privateMetadata: {
               stripeCustomerId: null,

@@ -12,9 +12,9 @@ const SubscriptionPage = async () => {
   if (!userId) {
     redirect("/login");
   }
-  const user = await clerkClient().users.getUser(userId); // Pegando os dados do usuári que está logado
+  const user = await clerkClient().users.getUser(userId); 
   const currentMonthTransactions = await getCurrentMonthTransactions()
-  const hasPremiumPlan = user.publicMetadata.subscriptionPlan === "premium"; // Verificando se o usuário tem o plano premium
+  const hasPremiumPlan = user.publicMetadata.subscriptionPlan === "premium"; 
 
   return (
     <>

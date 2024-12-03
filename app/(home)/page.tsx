@@ -1,5 +1,4 @@
-
-import { auth } from "@clerk/nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import NavBar from "../_components/navbar";
 import Summarycards from "./_components/summary-cards";
@@ -10,38 +9,42 @@ import { getDashboard } from "../_data/get-dashboard";
 import ExpensesPerCategory from "./_components/expenses-per-category";
 import LastTransactions from "./_components/last-transactions";
 import { canUserAddTransaction } from "../_data/can-user-add-transaction";
-
+import AiReporterButton from "./_components/ai-reporter-button";
 interface HomeProps {
   searchParams: {
     month: string;
   };
 }
 
-
 const Home = async ({searchParams: {month}}: HomeProps) => {
   const { userId } = await auth();
   if (!userId) {
     redirect("/login");
   }
-  const monthIsInvalid = !month || !isMatch(month, "MM"); // Se não tiver um mês fornecido, ou um mês que não está no formato MM, eu vou redirecionar para a página do mês padrão.
-  if (monthIsInvalid) { // Se o mês não for válido, eu vou redirecionar para a página do mês padrão.
+  const monthIsInvalid = !month || !isMatch(month, "MM"); 
+  if (monthIsInvalid) {
     redirect(`?month=${new Date().getMonth() + 1}`);
   }
   
-  const dashboard = await getDashboard(month); /// Pegando os dados da dashboard, e passando como parâmetro para os componentes abaixo.
+  const dashboard = await getDashboard(month);
   const userCanAddTransaction = await canUserAddTransaction(); 
+  const user = await clerkClient().users.getUser(userId);
   return (
     <>
       <NavBar />
       <div className="flex flex-col p-6 space-y-6 overflow-hidden">
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold">Dashboard</h1>
-          <TimeSelect />
+          <div className="flex items-center gap-3">
+            <AiReporterButton month={month} hasPremiumPlan={user.publicMetadata.subscriptionPlan === "premium"} />
+            <TimeSelect />
+          </div>
+          
         </div>
 
         <div className="grid grid-cols-[2fr,1fr] gap-6 overflow-hidden">
           <div className="flex flex-col gap-6 overflow-hidden">
-            <Summarycards month={month} {...dashboard} userCanAddTransaction={userCanAddTransaction}/> {/* Passando o mês e todos os dados da dashboard para o componente Summarycards */}
+            <Summarycards month={month} {...dashboard} userCanAddTransaction={userCanAddTransaction}/> 
             <div className="grid h-[450px] grid-cols-3 grid-rows-1 gap-6 overflow-hidden">
                 <TransactionsPieChart {...dashboard} />
                 <ExpensesPerCategory
@@ -49,7 +52,7 @@ const Home = async ({searchParams: {month}}: HomeProps) => {
                 />
             </div>
           </div>
-          <LastTransactions lastTransactions={dashboard.lastTransactions} /> {/* Passando as últimas transações para o componente LastTransactions */}
+          <LastTransactions lastTransactions={dashboard.lastTransactions} /> 
         </div>
       </div>
     </>

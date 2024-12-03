@@ -14,7 +14,7 @@ import { TransactionPercentagePerType } from "@/app/_data/get-dashboard/type";
 import { PiggyBankIcon, TrendingDownIcon, TrendingUpIcon } from "lucide-react";
 import PercentageItem from "./percentage-item";
 
-const chartConfig = { // Configuração do gráfica. Isso que define o gráfico de pizza, as cores dele, e o que ele vai mostrar.
+const chartConfig = { 
   [TransactionType.INVESTIMENT]: {
     label: "Investido",
     color: "#FFFFFF",
@@ -80,7 +80,6 @@ const TransactionsPieChart = ({
           </PieChart>
         </ChartContainer>
 
-        {/* Aqui eu estou passando os valores de porcentagem para o componente PercentageItem, mostrando a porcentagem de cada dado da minha dashboard */}
         <div className="space-y-3">
           <PercentageItem
             icon={<TrendingUpIcon size={16} className="text-primary" />}

@@ -1,5 +1,3 @@
-// Aquivo, tem o componente que mostra o gráfico de pizza com as porcentagens, no caso a porcentagem dos dados que estão sendo mostrados.
-
 import { ReactNode } from "react";
 
 interface PercentageItemProps {

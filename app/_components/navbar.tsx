@@ -1,6 +1,5 @@
 "use client";
 
-
 import { UserButton } from "@clerk/nextjs"
 import Image from "next/image"
 import Link from "next/link"
@@ -8,7 +7,7 @@ import { usePathname } from "next/navigation"
 
 
 const Navbar = () => {
-    const pathName = usePathname(); // Controle de estado para mostrar que o link está ativo, colocar uma cor verde nele. Esse hook vai pegar a url atual.
+    const pathName = usePathname(); 
   return (
     <nav className="flex justify-between px-8 py-4 border-b border-solid">
         <div className="flex items-center gap-10">
@@ -29,7 +28,7 @@ const Navbar = () => {
                 Assinatura
             </Link>
         </div>
-        <UserButton showName/> {/* showName para exibir o nome do usuário */}
+        <UserButton showName/> 
     </nav>
   )
 }

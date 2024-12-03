@@ -14,7 +14,6 @@ export const TRANSACTION_PAYMENT_METHOD_ICONS = {
   [TransactionPaymentMethod.OTHER]: "other.svg",
 };
 
-  // A categoria está sendo renderizada com o nome do enum, então preciso converter esse nome para português. E para isso posso criar um mapa que mapeia o nome do enum para o nome em português. 
   export const TRANSACTION_CATEGORY_LABELS = {
     EDUCATION: "Educação",
     ENTERTAINMENT: "Entretenimento",

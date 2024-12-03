@@ -1,10 +1,9 @@
-
 import AddTransactionButton from '@/app/_components/add-transaction-button';
 import { Card, CardContent, CardHeader } from '@/app/_components/ui/card'
 import { ReactNode } from 'react'
 
 interface SummarycardProps {
-    icon: ReactNode; // ReactNode pois ele será um elemento do React.
+    icon: ReactNode; 
     title: string;
     amount: number;
     size?: "small" | "large";

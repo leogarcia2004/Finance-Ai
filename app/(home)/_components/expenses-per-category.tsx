@@ -26,7 +26,7 @@ const ExpensesPerCategory = ({
               </p>
               <p className="text-sm font-bold">{category.percentageOfTotal}%</p>
             </div>
-            <Progress value={category.percentageOfTotal} /> {/* Aqui eu estou passando a porcentagem de cada categoria para o componente Progress, que é o componente que mostra a barra de progresso. */}
+            <Progress value={category.percentageOfTotal} /> 
           </div>
         ))}
       </CardContent>

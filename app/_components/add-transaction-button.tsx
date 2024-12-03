@@ -10,9 +10,8 @@ interface AddTransactionButtonProps {
   userCanAddTransaction?: boolean;
 }
 
-// Composition Pattern - Composição de componentes. um padrão de ir construindo meu componente apartir de subcomponentes.
 const AddTransactionButton = ({userCanAddTransaction}: AddTransactionButtonProps) => {
-  // O botão Vai controlar o estado de abertura que vai ser passado como prop para <UpsertTransactionDialog />.
+
   const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
   return (

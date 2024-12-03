@@ -11,7 +11,6 @@ import {
 } from "@/app/_constants/transactions";
 import EditTransactionButton from "../_components/edit-transactions-button";
 
-// Arquivo que define as colunas da minha tabela
 export const transactionColumns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "name",
@@ -20,7 +19,7 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "type",
     header: "Tipo",
-    cell: ({ row: { original: transaction } }) => ( // a 'row' é a transação. O que retornar nesse cell, é o que vai ser renderizado na minha célula.
+    cell: ({ row: { original: transaction } }) => ( 
       <TransactionTypeBadge transaction={transaction} />
     ),
   },
@@ -50,10 +49,10 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
     accessorKey: "amount",
     header: "Valor",
     cell: ({ row: { original: transaction } }) =>
-      new Intl.NumberFormat("pt-BR", { // Esse Intl é uma classe global do JavaScript que me permite formatar números, datas e moedas.
+      new Intl.NumberFormat("pt-BR", { 
         style: "currency",
         currency: "BRL",
-      }).format(Number(transaction.amount)), // Preciso colocar o Number aqui porque o amount é uma string e o Intl.NumberFormat espera um número. Esse é o jeito para formatar o número como moeda.
+      }).format(Number(transaction.amount)), 
   },
   {
     accessorKey: "actions",

@@ -42,13 +42,9 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { upsertTransaction } from "../_actions/upsert-transaction";
 
-// DialogTrigger é um componente que vai ser responsável por abrir o meu modal(dialog).
-// DialogContent é o conteúdo do meu modal(dialog).
 
-// Método de validação de formulário com zod. é uma forma padrão de validação de formulário essa abaixo.
 const formSchema = z.object({
   name: z.string().trim().min(1, {
-    // Usando o trim() para não contar os espaços em branco.
     message: "Nome é obrigatório",
   }),
   amount: z.number().positive({
@@ -56,13 +52,13 @@ const formSchema = z.object({
   }),
   type: z.nativeEnum(TransactionType, {
     required_error: "O Tipo é obrigatório",
-  }), // O meu tipo tem que ser um dos valores do meu enum TransactionType.
+  }), 
   category: z.nativeEnum(TransactionCategory, {
     required_error: "A categora é obrigatória",
-  }), // A minha cateogria tem que ser um dos valores do meu enum TransactionType.
+  }), 
   paymentMethod: z.nativeEnum(TransactionPaymentMethod, {
     required_error: "O método de pagamento é obrigatório",
-  }), // O meu método de pagamento tem que ser um dos valores do meu enum TransactionType.
+  }), 
   date: z.date({
     message: "Data é obrigatória",
   }),
@@ -88,14 +84,13 @@ const UpsertTransactionDialog = ({
     defaultValues: defaultValues ?? {
       name: "",
       amount: 50,
-      type: TransactionType.EXPENSE, // O valor default(padrão) do meu tipo é despesa.
+      type: TransactionType.EXPENSE, 
       category: TransactionCategory.OTHER,
       paymentMethod: TransactionPaymentMethod.CASH,
       date: new Date(),
     },
   });
 
-  // Função que vai ser chamada quando o formulário for enviado.
   const onSubmit = async (data: FormSchema) => {
     try {
       await upsertTransaction({ ...data, id: transactionId, date: data.date.toISOString() });
@@ -114,7 +109,6 @@ const UpsertTransactionDialog = ({
       onOpenChange={(open) => {
         setIsOpen(open);
         if (!open) {
-          // Se o modal for fechado, eu quero resetar o meu formulário.
           form.reset();
         }
       }}
@@ -257,7 +251,6 @@ const UpsertTransactionDialog = ({
             />
 
             <DialogFooter>
-              {/* asChild é uma propriedade que eu posso passar para o meu componente para que ele seja renderizado como um filho do componente pai, dessa forma não aparece como dois botões no html da minha página */}
               <DialogClose asChild>
                 <Button type="button" variant="outline">
                   Cancelar

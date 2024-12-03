@@ -9,19 +9,16 @@ import { ScrollArea } from "../_components/ui/scroll-area";
 import { canUserAddTransaction } from "../_data/can-user-add-transaction";
 
 const TransactionsPage = async () => {
-  const {userId} = await auth(); // Pegar o id do usuário logado
-  if (!userId) { // Se não tiver usuário logado, redirecionar para a página de login
+  const {userId} = await auth(); 
+  if (!userId) {
     redirect("/login");
   }
-  // Pegar as transações do usuário logado.
-  // Acessar as transações do meu banco de dados. Para isso vou precisar usar o prisma também.
   const transactions = await db.transaction.findMany({
-    // Com isso, eu pego todas as transações que estão na tabela
     where: {
-      userId, // Filtrar as transações pelo id do usuário logado, ou seja, irá mostrar apenas as transações do usuário logado.
+      userId, 
     },
   });
-  const userCanAddTransaction = await canUserAddTransaction(); // Verificar se o usuário pode adicionar transações
+  const userCanAddTransaction = await canUserAddTransaction(); 
   return (
 
     <>

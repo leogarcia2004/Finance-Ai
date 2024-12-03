@@ -6,14 +6,10 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
 const LoginPage = async () => {
-  // Um componente pode ser assíncrono.
 
-  // Lógica para quando o usuário estiver logado, ele não ver a página de login.
-  const { userId } = await auth(); // o auth() vai retornar o userId se o usuário estiver logado. Ele vai pegar o osuário que estiver logado.
-  // userId é o usuário logado.
+  const { userId } = await auth(); 
   if (userId) {
-    // se userId existir, ou seja, se o usuário estiver logado.
-    redirect("/"); // Redireciona para a página inicial.
+    redirect("/"); 
   }
 
   return (
