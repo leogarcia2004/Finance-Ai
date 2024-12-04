@@ -93,7 +93,7 @@ const UpsertTransactionDialog = ({
 
   const onSubmit = async (data: FormSchema) => {
     try {
-      await upsertTransaction({ ...data, id: transactionId, date: data.date.toISOString() });
+      await upsertTransaction({ ...data, id: transactionId });
       setIsOpen(false);
       form.reset();
     } catch (error) {
@@ -145,11 +145,11 @@ const UpsertTransactionDialog = ({
                     <MoneyInput
                       placeholder="Digite o valor..."
                       value={field.value}
-                      onValueChange={({ floatValue }: { floatValue: number }) =>
+                      onValueChange={({ floatValue }) =>
                         field.onChange(floatValue)
                       }
                       onBlur={field.onBlur}
-                      disable={field.disabled}
+                      disabled={field.disabled}
                     />
                   </FormControl>
                   <FormMessage />
